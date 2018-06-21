@@ -40,10 +40,17 @@ internal func exerciseOne() {
      call at <cell phone number>."
      
      */
+    let lastName = userData["results"][0]["name"]["last"].stringValue
+    let streetName = userData["results"][0]["location"]["street"].stringValue
+    let city = userData["results"][0]["location"]["city"].stringValue
+    let state = userData["results"][0]["location"]["state"].stringValue
+    let postCode = userData["results"][0]["location"]["postcode"].stringValue
+    let title = userData["results"][0]["name"]["title"].stringValue
+    let emailAddress = userData["results"][0]["email"].stringValue
+    let cellPhoneNumber = userData["results"][0]["phone"].stringValue
     
-    
-    
-    
+    let string = "\(firstName) \(lastName) lives at \(streetName) in \(city),\(state), \(postCode). If you want to contact \(title). \(lastName), you can email \(emailAddress) or call at \(cellPhoneNumber)."
+//    print(string)
     
 }
 
@@ -87,7 +94,7 @@ internal func exerciseThree() {
     
     // We've done you the favor of grabbing an array of JSON objects representing each movie
     let allMoviesData = moviesData["feed"]["entry"].arrayValue
-    
+    print(allMoviesData.count)
     /*
      
      Figure out a way to turn the allMoviesData array into Movie structs!
@@ -95,7 +102,10 @@ internal func exerciseThree() {
      */
     var allMovies: [Movie] = []
     
-    
+    for json in allMoviesData {
+        let movie = Movie(json: json)
+        allMovies.append(movie)
+    }
     
     
     /*
@@ -106,7 +116,12 @@ internal func exerciseThree() {
      
      */
 //    print("The following movies are Disney movies:")
-    
+    for movie in allMovies {
+        
+        if movie.rightsOwner.contains("Disney"){
+            print(movie.name)
+        }
+    }
     
     
     
@@ -116,8 +131,12 @@ internal func exerciseThree() {
      movie that costs less than $15. Iterate over all the values in `allMovies` to check!
      
      */
-//    print("The following movies are cost less than $15:")
-    
+    print("The following movies are cost less than $15:")
+    for movie in allMovies {
+        if movie.price < 15.00 {
+            print(movie.name)
+        }
+    }
     
     
     
@@ -127,8 +146,12 @@ internal func exerciseThree() {
      each movie released in 2016. Iterate over all the values in `allMovies` to check!
      
      */
-//    print("The following movies were released in 2016:")
-    
+     print("The following movies were released in 2016:")
+    for movie in allMovies {
+        if movie.releaseDate.contains("2016"){
+            print(movie.name)
+        }
+    }
     
     
     
