@@ -13,6 +13,8 @@ import AlamofireImage
 import AlamofireNetworkActivityIndicator
 
 class ViewController: UIViewController {
+    
+    var movie: Movie?
 
     @IBOutlet weak var movieTitleLabel: UILabel!
     @IBOutlet weak var rightsOwnerLabel: UILabel!
@@ -24,9 +26,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        exerciseOne()
-        exerciseTwo()
-        exerciseThree()
+//        exerciseOne()
+//        exerciseTwo()
+//        exerciseThree()
         
         let apiToContact = "https://itunes.apple.com/us/rss/topmovies/limit=25/json"
         // This code will call the iTunes top 25 movies endpoint listed above
@@ -38,8 +40,15 @@ class ViewController: UIViewController {
                     
                     // Do what you need to with JSON here!
                     // The rest is all boiler plate code you'll use for API requests
+                    let movieData = json["feed"]["entry"].arrayValue
+                    let index = arc4random_uniform(UInt32(movieData.count))
+                    self.movie = Movie(json: movieData[Int(index)])
                     
-                    
+                    self.movieTitleLabel.text = self.movie?.name
+                    self.rightsOwnerLabel.text = self.movie?.rightsOwner
+                    self.releaseDateLabel.text = self.movie?.releaseDate
+                    self.priceLabel.text = "$\(self.movie?.price ?? 0.0)"
+                    self.loadPoster(urlString: (self.movie?.imageUrl)!)
                 }
             case .failure(let error):
                 print(error)
@@ -58,7 +67,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func viewOniTunesPressed(_ sender: AnyObject) {
-        
+        UIApplication.shared.openURL(URL(string: (movie?.link)!)!)
     }
     
 }

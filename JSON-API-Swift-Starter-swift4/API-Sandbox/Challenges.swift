@@ -134,7 +134,7 @@ internal func exerciseThree() {
     print("The following movies are cost less than $15:")
     for movie in allMovies {
         if movie.price < 15.00 {
-            print(movie.name)
+            print("\(movie.name):$\(movie.price)")
         }
     }
     
@@ -149,7 +149,7 @@ internal func exerciseThree() {
      print("The following movies were released in 2016:")
     for movie in allMovies {
         if movie.releaseDate.contains("2016"){
-            print(movie.name)
+            print("\(movie.name):\(movie.releaseDate)")
         }
     }
     
